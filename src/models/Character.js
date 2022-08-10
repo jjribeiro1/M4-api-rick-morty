@@ -9,6 +9,14 @@ const CharacterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+  },
+  origem: {
+    type: String,
+    required: true,
+  },
 });
 
 const Character = new mongoose.model(
