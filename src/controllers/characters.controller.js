@@ -1,10 +1,12 @@
 const charactersService = require("../services/characters.service");
 const createCharacterController = async (req, res) => {
   try {
-    const { name, imageUrl } = req.body;
+    const { name, imageUrl, status, origem } = req.body;
     const character = await charactersService.createCharacterService(
       name,
-      imageUrl
+      imageUrl,
+      status,
+      origem
     );
     res.status(201).send({ character, message: "Created" });
   } catch (err) {

@@ -19,9 +19,11 @@ const notFound = async (req, res, next) => {
 };
 
 const bodyValidation = (req, res, next) => {
-  const { name, imageUrl } = req.body;
-  if (!name || !imageUrl) {
-    return res.status(400).send({ message: "name and imageUrl are required" });
+  const { name, imageUrl, status, origem } = req.body;
+  if (!name || !imageUrl || !status || !origem) {
+    return res
+      .status(400)
+      .send({ message: "name, imageUrl, status and origem are required" });
   }
   next();
 };
