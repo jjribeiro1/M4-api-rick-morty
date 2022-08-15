@@ -33,8 +33,34 @@ const readCharacterByIdController = async (req, res) => {
   }
 };
 
+const updateCharacterController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedCharacter = req.body;
+    const response = await charactersService.updateCharacterService(
+      id,
+      updatedCharacter
+    );
+    res.status(200).send({ response, message: "Updated" });
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
+};
+
+const deleteCharacterController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await charactersService.deleteCharacterService(id);
+    res.status(200).send({ message: "Deleted" });
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
+};
+
 module.exports = {
   createCharacterController,
   readAllCharacterController,
   readCharacterByIdController,
+  updateCharacterController,
+  deleteCharacterController,
 };

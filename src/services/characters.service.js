@@ -13,8 +13,18 @@ const readAllCharacterService = async () =>
 
 const readCharacterByIdService = async (id) => await Character.findById(id);
 
+const updateCharacterService = async (id, updatedCharacter) =>
+  await Character.findByIdAndUpdate(id, updatedCharacter).setOptions({
+    new: true,
+  });
+
+const deleteCharacterService = async (id) =>
+  await Character.findByIdAndDelete(id);
+
 module.exports = {
   createCharacterService,
   readAllCharacterService,
   readCharacterByIdService,
+  updateCharacterService,
+  deleteCharacterService,
 };
