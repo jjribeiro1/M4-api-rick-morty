@@ -1,4 +1,5 @@
 const charactersService = require("../services/characters.service");
+
 const createCharacterController = async (req, res) => {
   try {
     const { name, imageUrl, status, origem } = req.body;
@@ -17,6 +18,10 @@ const createCharacterController = async (req, res) => {
 const readAllCharacterController = async (req, res) => {
   try {
     const characters = await charactersService.readAllCharacterService();
+
+    if (characters.length === 0) {
+      return res.status(400).send({ message: "No characters found" });
+    }
     res.status(200).send({ characters, message: "OK" });
   } catch (err) {
     return res.status(500).send({ message: err.message });
@@ -28,6 +33,21 @@ const readCharacterByIdController = async (req, res) => {
     const id = req.params.id;
     const character = await charactersService.readCharacterByIdService(id);
     res.status(200).send({ character, message: "OK" });
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
+};
+
+const readCharacterByNameController = async (req, res) => {
+  try {
+    const { name } = req.query;
+    const characters = await charactersService.readCharacterByNameService(name);
+
+    if (characters.length === 0) {
+      return res.status(400).send({ message: "No characters found." });
+    }
+
+    res.status(200).send({ characters, message: "OK" });
   } catch (err) {
     return res.status(500).send({ message: err.message });
   }
@@ -61,6 +81,7 @@ module.exports = {
   createCharacterController,
   readAllCharacterController,
   readCharacterByIdController,
+  readCharacterByNameController,
   updateCharacterController,
   deleteCharacterController,
 };

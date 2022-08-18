@@ -13,6 +13,11 @@ const readAllCharacterService = async () =>
 
 const readCharacterByIdService = async (id) => await Character.findById(id);
 
+const readCharacterByNameService = async (name) =>
+  await Character.find({ name: { $regex: `${name}`, $options: "i" } }).sort({
+    _id: -1,
+  });
+
 const updateCharacterService = async (id, updatedCharacter) =>
   await Character.findByIdAndUpdate(id, updatedCharacter).setOptions({
     new: true,
@@ -25,6 +30,7 @@ module.exports = {
   createCharacterService,
   readAllCharacterService,
   readCharacterByIdService,
+  readCharacterByNameService,
   updateCharacterService,
   deleteCharacterService,
 };
