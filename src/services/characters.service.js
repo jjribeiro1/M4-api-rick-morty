@@ -33,5 +33,4 @@ module.exports = {
   readCharacterByNameService,
   updateCharacterService,
   deleteCharacterService,
-  countCharacters,
 };
