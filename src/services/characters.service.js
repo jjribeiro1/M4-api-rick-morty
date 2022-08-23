@@ -8,8 +8,8 @@ const createCharacterService = async (name, imageUrl, status, origem) =>
     origem: origem,
   });
 
-const readAllCharacterService = async () =>
-  await Character.find().sort({ _id: -1 });
+const readAllCharacterService = async (offset, limit) =>
+  await Character.find().skip(offset).limit(limit);
 
 const readCharacterByIdService = async (id) => await Character.findById(id);
 
@@ -33,4 +33,5 @@ module.exports = {
   readCharacterByNameService,
   updateCharacterService,
   deleteCharacterService,
+  countCharacters,
 };

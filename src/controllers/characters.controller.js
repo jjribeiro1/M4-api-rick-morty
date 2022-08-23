@@ -17,12 +17,29 @@ const createCharacterController = async (req, res) => {
 
 const readAllCharacterController = async (req, res) => {
   try {
-    const characters = await charactersService.readAllCharacterService();
+    let page = parseInt(req.query.page, 10);
+    let itens = parseInt(req.query.itens, 10);
+
+    if (!page) {
+      page = 1;
+    }
+
+    if(!itens) {
+      itens = 5
+    }
+
+    const offset = (page - 1) * itens;
+    const limit = itens;
+
+    const characters = await charactersService.readAllCharacterService(
+      offset,
+      limit
+    );
 
     if (characters.length === 0) {
-      return res.status(400).send({ message: "No characters found" });
+     return res.status(400).send({ message: "No characters found" });
     }
-    res.status(200).send({ characters, message: "OK" });
+    return res.status(200).send({ characters, message: "OK" });
   } catch (err) {
     return res.status(500).send({ message: err.message });
   }
